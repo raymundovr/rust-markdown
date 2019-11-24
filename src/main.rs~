@@ -1,0 +1,27 @@
+#[derive(Debug)]
+enum State {
+    Normal,
+    Uppercase,
+    Lowercase,
+    Comment,
+}
+use State::*;
+
+fn markup(c: &char, s: &State) -> Option<State> {
+    match (c, s) {
+        (_, Normal) => Some(Normal),
+        ('^', Normal) => None,    //(Uppercase),
+        ('_', Normal) => None,    //(Lowercase),
+        ('#', Normal) => None,    //(Comment),
+        ('^', Uppercase) => None, //(_, Normal),
+        (_, Uppercase) => Some(Uppercase),
+        ('_', Lowercase) => None, //(_, Normal),
+        (_, Lowecase) => Some(Lowercase),
+        ('#', Comment) => None, //(_, Normal),
+        (_, Comment) => None,   //(_, Comment),
+    }
+}
+
+fn main() {
+    println!("{:?}", ('a', Normal));
+}
